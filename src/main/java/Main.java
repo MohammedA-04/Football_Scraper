@@ -10,7 +10,7 @@ public class Main {
 
         Premier_League.table();
 
-        
+
         // Errors
         // * GA missing i.e., 18   (now: 43)
         // * GD missing i.e., +25  (now: )
