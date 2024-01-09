@@ -1,0 +1,23 @@
+W = 20
+D = 20
+D = 20
+W = 20
+W = 20
+
+Possible Events
+* W and D and L
+
+Win Rate = 13/20 = 0.65
+Win Form = 60/5  = 0.6
+WR + WF /2 * 100 = 62.5%
+
+LDLWL = 1/5
+Win Rate = 9/20 = 0.45
+Win Form = 0.2
+32.5
+
+WR 4/19 = 0.21
+WF 2/5 = 0.4
+
+0.4 + 0.21 = 0.61/2 = 0.31 x 100 = 31%
+
