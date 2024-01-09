@@ -12,7 +12,7 @@ public class Main {
 
 
         Premier_League.table();
-        System.out.println("Hello");
+     
 
         // Errors
         // * GA missing i.e., 18   (now: 43)
