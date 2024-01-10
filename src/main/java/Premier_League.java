@@ -41,7 +41,8 @@ public class Premier_League {
     public static void format() throws IOException {
 
         /**
-         * Element Structure:
+         * Element Structure: body -> row -> head & data
+         * <p>
          * <tbody>
          *  |-- <tr data-row="0">...</tr> // club #1
          *
@@ -51,14 +52,14 @@ public class Premier_League {
          *      |-- <td class... data-stat="points">45</td>
          *
          *  |-- <tr data row="19">...</tr>
-         *  </tbody>
+         * </tbody>
          **/
 
         // Local Var: "%-s" width formatting
         int rank = 5, team = 0, mp = 0, w = 0, d = 0, l = 0, gf = 0, ga = 0, pts = 0, ptsMp = 0, gd = 0, xG = 0, xGA = 0, xGD = 0, xGDper90 = 0, last5 = 0, AttMp = 0, TS = 0, note = 0;
         int currentWidth = 0;
 
-        // Iterate each {tr} in {tbody} represented aa Element {row}
+        // Iterate each {tr} in {tbody} represented aa Element $row
         for (Element row : tableBody.select("tr")) {
 
             // In 0-19 {tr} it contains 20+ {td} pieces of data
@@ -357,19 +358,25 @@ public class Premier_League {
 
 
     public static void calcWinPercentageForNextGame() {
-        for (Element row : tableBody.select("tr td")) {
 
+        for (Element body : tableBody.getAllElements()) {
 
-            if ("last_5".equals(row.attr("data-stat"))) {
-                // get team and form
-                String name = row.select("team").text();
-                String form = row.select("last_5").text();
+            // row suppose to get trs;
+            Elements rows = body.select("tr");
 
-                // get mp and w
-                String matches = row.select("games").text();
-                String wins = row.select("wins").text();
+            for (Element row: rows){
 
-                if (!matches.isEmpty() && !wins.isEmpty()) {
+                Elements td = row.select("td[data-stat=last_5]");
+
+                if (!td.isEmpty()) {
+                    // get team and form
+                    String name = row.select("td[data-stat=team] a[href]").text();
+                    String form = row.select("td[data-stat=last_5] div[style] a[href] ").text();
+
+                    // get mp and w
+                    String matches = row.select("td[data-stat=games]").text();
+                    String wins = row.select("td[data-stat=wins]").text();
+
                     // parse mp and w
                     int mp = Integer.parseInt(matches);
                     int w = Integer.parseInt(wins);
@@ -379,20 +386,22 @@ public class Premier_League {
                     int formCount = form.replaceAll("[^W]", "").length();
                     double formRate = (double) formCount / 5;
 
-                    double winPercent = (winRate + formRate / 2) * 100;
+                    double winPercent = ((winRate + formRate) /2) * 100;
 
-                    /// TODO: String WinRate =  wins /  matches;
-                    /// TODO: String Form = Form/5;
-                    //  TODO: int ans = WinRate + Form /2 * 100 = Ans%
-
-                    System.out.printf("%s Win Percentage is %.2f[%%]", name, winPercent);
+                    // Use %% to print % in printf
+                    System.out.printf("%s Win Percentage is %.2f%%\n", name, winPercent);
 
                 } else {
                     System.out.println("not found");
                 }
+
+            }
+
+
+
             }
         }
-    }
+
 
     // Now in hashmap name and form
 

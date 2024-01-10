@@ -8,16 +8,18 @@ import java.util.Scanner;
   * if violated -> 1hr bot jail session  **/
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         Premier_League.table();
+        Thread.sleep(1000*5);
         // time . sleep 10
 
         {
             Scanner sc = new Scanner(System.in);
-            System.out.println("Enter Number Of Page e.g., 2 | enter: 2");
-            System.out.println("1 | Calculate Win Percentage for Next Game");
-            System.out.println("2 | Exit");
+            System.out.println("\nEnter Number Of Page e.g., 2 | enter: 2");
+            System.out.println("1 | Calculate Win Percentage for Next Game [For All Teams]");
+            System.out.println("2 | Calculate Win Percentage for Next Game [For Your Team]");
+            System.out.println("3 | Exit");
             int s = sc.nextInt();
 
             switch (s){
@@ -26,6 +28,12 @@ public class Main {
                     Premier_League.calcWinPercentageForNextGame();
                     break;
                 case 2:
+                    // if user want % of winning for his team
+                    System.out.println("Enter Your Team: (e.g., Liverpool or Aston Villa");
+                    String usrTeam = sc.nextLine();
+                    // TODO: loop fields -> add to hashmap -> check if contains -> return w% for x team
+                    // Premier_League.calcWinPercentageForNextGame();
+                case 3:
                     System.exit(0);
                     break;
 
