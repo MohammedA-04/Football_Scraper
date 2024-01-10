@@ -12,6 +12,7 @@ public class Premier_League {
     static Element tableBody;
     static Element tableHeading;
     static Elements columns;
+    static Boolean bol;
     static HashMap<String, String> nameForm;
 
     // static int rank, squad, mp, w, d, l, gf, ga, pts, gd, xG, xGA, xGD, AttMp, TS;
@@ -402,6 +403,59 @@ public class Premier_League {
             }
         }
 
+    public static void calcWinPercentageForNextGame(String usrTeam){
+
+         /** Logic Overview
+          * #1 Scrap tbody
+          * #2 Select table row
+          * #3 get each data-stat="team" if equals to <userTeam>
+          * #4 then calc w%
+          * #5 else repeat #3 until end then if !found return "not found"
+          * **/
+
+        for (Element body : tableBody.getAllElements()) {
+
+            // row suppose to get trs;
+            Elements rows = body.select("tr");
+
+            for (Element row: rows){
+
+                Elements td = row.select("td[data-stat=last_5]");
+
+                if (!td.isEmpty()) {
+                    // get team name see if equals <userTeam>
+                    String name = row.select("td[data-stat=team] a[href]").text();
+
+                    if (name.equalsIgnoreCase(usrTeam)){
+
+
+                        String form = row.select("td[data-stat=last_5] div[style] a[href] ").text();
+
+                        // get mp and w
+                        String matches = row.select("td[data-stat=games]").text();
+                        String wins = row.select("td[data-stat=wins]").text();
+
+                        // parse mp and w
+                        int mp = Integer.parseInt(matches);
+                        int w = Integer.parseInt(wins);
+
+                        // replace [^w] everything except w
+                        double winRate = (double) w / mp;
+                        int formCount = form.replaceAll("[^W]", "").length();
+                        double formRate = (double) formCount / 5;
+
+                        double winPercent = ((winRate + formRate) / 2) * 100;
+
+                        // Use %% to print % in printf
+                        System.out.printf("\n%s has a win percentage of %.2f%% for their next game\n", name, winPercent);
+                        return;
+
+                }
+
+            } else {
+                    System.out.println("null");
+                }
+    }
 
     // Now in hashmap name and form
 
@@ -409,19 +463,7 @@ public class Premier_League {
     // TODO: we need assign each instance of 'W' as w++
     // TODO: Wins/MP = x% || FORM/5 = y% -> x+y=xy/2*100=Ans
 
-
-
-
-
-    public  void print() throws  IOException{
-        System.out.println("Rank | Squad | MP | W | D | L | GF | GA | GD | Pts | Pts/Mp | xG | xGA | xGD | Att/MP | Top Scorer");
-
-
-       // System.out.printf("%-" ++);
+        }
     }
-
-
-
-
-
 }
+

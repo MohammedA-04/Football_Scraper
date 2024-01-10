@@ -8,6 +8,9 @@ import java.util.Scanner;
   * if violated -> 1hr bot jail session  **/
 
 public class Main {
+    static String usrTeam;
+
+
     public static void main(String[] args) throws InterruptedException {
 
         Premier_League.table();
@@ -29,8 +32,10 @@ public class Main {
                     break;
                 case 2:
                     // if user want % of winning for his team
-                    System.out.println("Enter Your Team: (e.g., Liverpool or Aston Villa");
-                    String usrTeam = sc.nextLine();
+                    System.out.println("\nEnter Your Team: (e.g., Liverpool or Aston Villa");
+                    usrTeam = sc.nextLine();
+                    usrTeam = sc.nextLine();
+                    Premier_League.calcWinPercentageForNextGame(usrTeam);
                     // TODO: loop fields -> add to hashmap -> check if contains -> return w% for x team
                     // Premier_League.calcWinPercentageForNextGame();
                 case 3:
