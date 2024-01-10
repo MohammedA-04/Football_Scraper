@@ -1,8 +1,8 @@
-W = 20
-D = 20
-D = 20
-W = 20
-W = 20
+Goal: To loop through each {tr} and get From{td} then each W = 20%
+      then apply algorithm to calc Win% given Form and Overall W%
+
+WDDWW = 60/100
+
 
 Possible Events
 * W and D and L

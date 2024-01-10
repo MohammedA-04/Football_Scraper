@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /** Note: This project designed to help me learn jsoup and perform data analytics
 
  Web Scrape Rule on FBREF:
@@ -9,18 +11,27 @@ public class Main {
     public static void main(String[] args) {
 
         Premier_League.table();
+        // time . sleep 10
 
+        {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter Number Of Page e.g., 2 | enter: 2");
+            System.out.println("1 | Calculate Win Percentage for Next Game");
+            System.out.println("2 | Exit");
+            int s = sc.nextInt();
 
-        // Errors
-        // * GA missing i.e., 18   (now: 43)
-        // * GD missing i.e., +25  (now: )
-        // *
+            switch (s){
+                case 1:
+                    // method call
+                    Premier_League.calcWinPercentageForNextGame();
+                    break;
+                case 2:
+                    System.exit(0);
+                    break;
 
-        // * 43, 18, +25, 45, 2.25, 44.1, 22.6, +21.6, +1.08, Form, Att, Mo Salah
-        // Missing ga and gd
+            }
+        }
 
-        // should be Gf  ga   gd  pts
-        // Should be 43, 18, +25, 45, 3
 
     }
 }
