@@ -14,6 +14,7 @@ public class Premier_League {
     static Elements columns;
     static Boolean bol;
     static HashMap<String, String> nameForm;
+    Premier_League pl = new Premier_League();
 
     // static int rank, squad, mp, w, d, l, gf, ga, pts, gd, xG, xGA, xGD, AttMp, TS;
 
@@ -403,7 +404,7 @@ public class Premier_League {
             }
         }
 
-    public static void calcWinPercentageForNextGame(String usrTeam){
+    public static void calcWinPercentageForNextGame(String usrTeam, int choice){
 
          /** Logic Overview
           * #1 Scrap tbody
@@ -428,32 +429,72 @@ public class Premier_League {
 
                     if (name.equalsIgnoreCase(usrTeam)){
 
-
                         String form = row.select("td[data-stat=last_5] div[style] a[href] ").text();
 
-                        // get mp and w
-                        String matches = row.select("td[data-stat=games]").text();
-                        String wins = row.select("td[data-stat=wins]").text();
+                        if (choice == 2){
+                            // get mp and w
+                            String matches = row.select("td[data-stat=games]").text();
+                            String wins = row.select("td[data-stat=wins]").text();
 
-                        // parse mp and w
-                        int mp = Integer.parseInt(matches);
-                        int w = Integer.parseInt(wins);
+                            // parse mp and w
+                            int mp = Integer.parseInt(matches);
+                            int w = Integer.parseInt(wins);
 
-                        // replace [^w] everything except w
-                        double winRate = (double) w / mp;
-                        int formCount = form.replaceAll("[^W]", "").length();
-                        double formRate = (double) formCount / 5;
+                            // replace [^w] everything except w
+                            double winRate = (double) w / mp;
+                            int formCount = form.replaceAll("[^W]", "").length();
+                            double formRate = (double) formCount / 5;
 
-                        double winPercent = ((winRate + formRate) / 2) * 100;
+                            double winPercent = ((winRate + formRate) / 2) * 100;
 
-                        // Use %% to print % in printf
-                        System.out.printf("\n%s has a win percentage of %.2f%% for their next game\n", name, winPercent);
-                        return;
+                            // Use %% to print % in printf
+                            System.out.printf("\n%s has a win percentage of %.2f%% for their next game\n", name, winPercent);
+                            return;
+                        }
+                        if (choice == 3){
+                            // get mp and l
+                            String matches = row.select("td[data-stat=games]").text();
+                            String draws = row.select("td[data-stat=ties]").text();
 
-                }
+                            // parse mp and w
+                            int mp = Integer.parseInt(matches);
+                            int d = Integer.parseInt(draws);
+
+                            // replace [^w] everything except w
+                            double drawRate = (double) d / mp;
+                            int formCount = form.replaceAll("[^D]", "").length();
+                            double formRate = (double) formCount / 5;
+
+                            double drawPercent = ((drawRate + formRate) / 2) * 100;
+
+                            // Use %% to print % in printf
+                            System.out.printf("\n%s has a draw percentage of %.2f%% for their next game\n", name, drawPercent);
+                            return;
+                        }
+                        if (choice == 4){
+                            // get mp and w
+                            String matches = row.select("td[data-stat=games]").text();
+                            String losses = row.select("td[data-stat=losses]").text();
+
+                            // parse mp and w
+                            int mp = Integer.parseInt(matches);
+                            int l = Integer.parseInt(losses);
+
+                            // replace [^w] everything except w
+                            double lossRate = (double) l / mp;
+                            int formCount = form.replaceAll("[^L]", "").length();
+                            double formRate = (double) formCount / 5;
+
+                            double lossPercent = ((lossRate + formRate) / 2) * 100;
+
+                            // Use %% to print % in printf
+                            System.out.printf("\n%s has a loss percentage of %.2f%% for their next game\n", name, lossPercent);
+                            return;
+                        }
+                    }
 
             } else {
-                    System.out.println("null");
+                    System.out.println("td is null");
                 }
     }
 
@@ -465,5 +506,6 @@ public class Premier_League {
 
         }
     }
+
 }
 
