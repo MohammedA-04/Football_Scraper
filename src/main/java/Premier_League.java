@@ -2,19 +2,20 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import javax.lang.model.type.ErrorType;
 import java.io.IOException;
 import java.util.HashMap;
 
 public class Premier_League {
 
     // Regular Season i.e., Current
-    static String url = "https://fbref.com/en/comps/9/Premier-League-Stats";
+    // static String url = "https://fbref.com/en/comps/9/Premier-League-Stats";
+    static String url = "https://fbref.com/en/comps/9/2022-2023/2022-2023-Premier-League-Stats";
     static Element tableBody;
     static Element tableHeading;
     static Elements columns;
-    static Boolean bol;
     static HashMap<String, String> nameForm;
-    Premier_League pl = new Premier_League();
 
     // static int rank, squad, mp, w, d, l, gf, ga, pts, gd, xG, xGA, xGD, AttMp, TS;
 
@@ -35,7 +36,7 @@ public class Premier_League {
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e);
         }
     }
 
@@ -212,7 +213,7 @@ public class Premier_League {
                     System.out.printf("%-" + rank + "s | ", "Rank");
                     break;
                 case "team":
-                    System.out.printf("%-" + team + "s | ", "Club");
+                    System.out.printf("%-" +  team + "s | ", "Club");
                     break;
                 case "games":
                     System.out.printf("%-" + mp + "s | ", "MP");
@@ -369,11 +370,11 @@ public class Premier_League {
             for (Element row: rows){
 
                 Elements td = row.select("td[data-stat=last_5]");
+                String name = row.select("td[data-stat=team] a[href]").text();
 
-                if (!td.isEmpty()) {
+                if (!name.isEmpty()) {
                     // get team and form
-                    String name = row.select("td[data-stat=team] a[href]").text();
-                    String form = row.select("td[data-stat=last_5] div[style] a[href] ").text();
+                    // String form = row.select("td[data-stat=last_5] div[style] a[href] ").text();
 
                     // get mp and w
                     String matches = row.select("td[data-stat=games]").text();
@@ -385,13 +386,13 @@ public class Premier_League {
 
                     // replace [^w] everything except w
                     double winRate = (double) w / mp;
-                    int formCount = form.replaceAll("[^W]", "").length();
-                    double formRate = (double) formCount / 5;
+                    // int formCount = form.replaceAll("[^W]", "").length();
+                    // double formRate = (double) formCount / 5;
 
-                    double winPercent = ((winRate + formRate) /2) * 100;
+                    double winPercent = (winRate);
 
                     // Use %% to print % in printf
-                    System.out.printf("%s Win Percentage is %.2f%%\n", name, winPercent);
+                    System.out.printf("%s Win Percentage is %.0f%%\n", name, winPercent*100);
 
                 } else {
                     System.out.println("not found");
@@ -422,14 +423,15 @@ public class Premier_League {
             for (Element row: rows){
 
                 Elements td = row.select("td[data-stat=last_5]");
+                String name = row.select("td[data-stat=team] a[href]").text();
 
-                if (!td.isEmpty()) {
+                if (!name.isEmpty()) {
                     // get team name see if equals <userTeam>
-                    String name = row.select("td[data-stat=team] a[href]").text();
+
 
                     if (name.equalsIgnoreCase(usrTeam)){
 
-                        String form = row.select("td[data-stat=last_5] div[style] a[href] ").text();
+                        //String form = row.select("td[data-stat=last_5] div[style] a[href] ").text();
 
                         if (choice == 2){
                             // get mp and w
@@ -442,10 +444,10 @@ public class Premier_League {
 
                             // replace [^w] everything except w
                             double winRate = (double) w / mp;
-                            int formCount = form.replaceAll("[^W]", "").length();
-                            double formRate = (double) formCount / 5;
+                            //int formCount = form.replaceAll("[^W]", "").length();
+                            //double formRate = (double) formCount / 5;
 
-                            double winPercent = ((winRate + formRate) / 2) * 100;
+                            double winPercent = winRate;
 
                             // Use %% to print % in printf
                             System.out.printf("\n%s has a win percentage of %.2f%% for their next game\n", name, winPercent);
@@ -462,10 +464,10 @@ public class Premier_League {
 
                             // replace [^w] everything except w
                             double drawRate = (double) d / mp;
-                            int formCount = form.replaceAll("[^D]", "").length();
-                            double formRate = (double) formCount / 5;
+                            //int formCount = form.replaceAll("[^D]", "").length();
+                            //double formRate = (double) formCount / 5;
 
-                            double drawPercent = ((drawRate + formRate) / 2) * 100;
+                            double drawPercent = drawRate;
 
                             // Use %% to print % in printf
                             System.out.printf("\n%s has a draw percentage of %.2f%% for their next game\n", name, drawPercent);
@@ -482,10 +484,10 @@ public class Premier_League {
 
                             // replace [^w] everything except w
                             double lossRate = (double) l / mp;
-                            int formCount = form.replaceAll("[^L]", "").length();
-                            double formRate = (double) formCount / 5;
+                            //int formCount = form.replaceAll("[^L]", "").length();
+                            //double formRate = (double) formCount / 5;
 
-                            double lossPercent = ((lossRate + formRate) / 2) * 100;
+                            double lossPercent = lossRate;
 
                             // Use %% to print % in printf
                             System.out.printf("\n%s has a loss percentage of %.2f%% for their next game\n", name, lossPercent);

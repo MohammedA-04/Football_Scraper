@@ -20,6 +20,7 @@ public class Main {
 
         {
             Scanner sc = new Scanner(System.in);
+            System.out.println("\n\n\u001B[1m\u001B[31mWARNING:\u001B[0m\u001B[1m Fbref have removed the current season table this means only previous seasons can be used and \nnow the code is redundant however this model was working during Fbref time when it table on its website\u001B[0m");
             System.out.println("\nEnter Number Of Page e.g., 2 | enter: 2");
             System.out.println("1 | Calculate Win Percentage for Next Game [For All Teams]");
             System.out.println("2 | Calculate Win Percentage for Next Game [Your Team]");
